@@ -14,3 +14,7 @@ def intersection(v, w):
     for elem in doubles:
         tupledoubles += elem
     return (tupledoubles)
+
+
+
+### voilà un premier test (j'ai juste cherché un de mes logiciels d'upylab sur mon pc, copier-coller sur python marche donc c'est cool) ###
