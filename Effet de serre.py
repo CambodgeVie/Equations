@@ -13,10 +13,14 @@ Sortie: les températures des parois (2), leur rayonnement propre (2), la puissa
 
 """
 
-import numpy as np
-import scipy.optimize as resol
-import scipy.integrate as integr
+from numpy import *
+from scipy.optimize import *
 import matplotlib.pyplot as plt
+
+T = float(input('Température souhaitée au sein du séchoir: ', ))
+Fd = float(input('Valeur du flux direct: ', ))
+Fi = float(input('Valeur du flux indirect: ', ))
+h = float(input('Valeur du coefficient de transfert de chaleur: ', ))
 
 
 def rayonnement(temperature):                                           # Hypothèse du corps noir
@@ -25,17 +29,24 @@ def rayonnement(temperature):                                           # Hypoth
                                                                         # fonction de sa température
     return F
 
-def syst(T, Fd, Fi, h, inconnues):                                      # Ecrivons le système comme une fonction, avec
+def syst(inconnues):                                                    # Ecrivons le système comme une fonction, avec
                                                                         # "inconnues" étant le quintuple
                                                                         # (P, Fs, Ts, Fp,Tp)
 
-    eq1 = inconnues[0] - h*(inconnues[2] + inconnues[4] - 2 * T)        # La puissance à capter
-    eq2 = Fd + Fi - inconnues[0] - inconnues[3]                         # Bilan global
-    eq3 = Fd + inconnues[3] - inconnues[1] - h*(inconnues[2] - T)       # Bilan local sur le sol
-    eq4 = inconnues[1] - rayonnement(inconnues[2])                      # Le sol est un corps noir
-    eq5 = inconnues[3] - rayonnement(inconnues[4])                      # Le plastique est un corps noir
+    eq = empty((5))
 
-    return eq1, eq2, eq3, eq4, eq5
+    eq[0] = inconnues[0] - h*(inconnues[2] + inconnues[4] - 2 * T)        # La puissance à capter
+    eq[1] = Fd + Fi - inconnues[0] - inconnues[3]                         # Bilan global
+    eq[2] = Fd + inconnues[3] - inconnues[1] - h*(inconnues[2] - T)       # Bilan local sur le sol
+    eq[3] = inconnues[1] - rayonnement(inconnues[2])                      # Le sol est un corps noir
+    eq[4] = inconnues[3] - rayonnement(inconnues[4])                      # Le plastique est un corps noir
 
-solution_du_systeme = resol.root(syst)
-print(solution_du_systeme)
+    return eq
+
+solution_du_systeme = array([1, 1, 1, 1, 1])
+sol = fsolve(syst, solution_du_systeme)
+print('La puissance à capter est de ', sol[0], ' Watt par mètre carré de surface\n',
+      'Le flux émis par le sol est de ', sol[1], ' Watt par mètre carré\n'
+      , 'La température atteinte par le sol est de ', sol[2], ' K\n'
+      , 'Le flux émis par la paroi en plastique est de ', sol[3], ' W/m^2 \n',
+      'La température atteinte par la paroi en plastique est de ', sol[4], ' K')
