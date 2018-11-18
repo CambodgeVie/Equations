@@ -6,7 +6,7 @@ Auteur : groupe n°1
 
 Date : 9 novembre 2018
 
-Mise en équations des dimensions du séchoir solaire, sous forme de
+But : Mise en équations des dimensions du séchoir solaire, sous forme de
 fonctions afin de déterminer h
 
 Entrée : viscosités dynamique et cinématique, constante g de gravitation,
