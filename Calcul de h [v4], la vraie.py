@@ -91,4 +91,4 @@ def coeffh(vd, vc, beta, g, alpha, L, H, deltaT, l, Q, long):
     return h
 
 print('La valeur du coefficient de transfert de chaleur pour la variation de température de', deltaT,' K est de ',
-      coeffh(vd, vc, beta, g, alpha, L, H, deltaT, l, Q, long, x), 'Watts par Kelvins par mètre carré de surface')
+      coeffh(vd, vc, beta, g, alpha, L, H, deltaT, l, Q, long), 'Watts par Kelvins par mètre carré de surface')
